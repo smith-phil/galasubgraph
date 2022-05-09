@@ -34,7 +34,22 @@ Contents
 
  ### Build and deploy
  ---
- TBC.
- 
+ To build the subgraph run 
+
+ ```
+ npx graph-compiler \
+  --config townstar.json \
+  --include node_modules/@openzeppelin/subgraphs/src/datasources \
+  --export-schema \
+  --export-subgraph
+  ```
+ To deploy the subgraph to Subgraph Studio run
+ ```
+npx graph-cli codegen generated/townstar.subgraph.yaml
+npx graph-cli build generated/townstar.subgraph.yaml
+npx graph-cli deploy --studio <your-subgraph-name> generated/sample.subgraph.yaml
+  ```
+
+_The build and deploy instructions are based on the [Open Zeppelin docs](https://docs.openzeppelin.com/subgraphs/0.1.x/generate)._
 
  
