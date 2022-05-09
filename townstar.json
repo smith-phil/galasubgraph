@@ -1,0 +1,7 @@
+{
+    "output": "generated/townstar.",
+    "chain": "mainnet",
+    "datasources": [
+      { "address": "0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c", "startBlock": 10198649, "module": [ "erc1155"] }
+    ]
+  }
