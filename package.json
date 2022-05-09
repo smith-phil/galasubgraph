@@ -1,0 +1,18 @@
+{
+  "name": "gala-subgraph",
+  "version": "1.0.0",
+  "description": "Gala games NFT minting subgraph",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Phil Smith",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/subgraphs": "^0.1.7-1"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.29.2",
+    "@graphprotocol/graph-ts": "^0.26.0"
+  }
+}
