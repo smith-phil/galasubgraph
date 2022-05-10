@@ -35,6 +35,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 	let contract = fetchERC20(event.address)
 	let transfer = new ERC20Transfer(events.id(event))
 	transfer.emitter = contract.id
+	transfer.contract = contract.id
 	transfer.transaction = transactions.log(event).id
 	transfer.timestamp = event.block.timestamp
 	transfer.value = decimals.toDecimals(event.params.value, contract.decimals)
