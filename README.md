@@ -47,7 +47,7 @@ Contents
  ```
 npx graph-cli codegen src/townstar.subgraph.yaml
 npx graph-cli build src/townstar.subgraph.yaml
-npx graph-cli deploy --studio <your-subgraph-name> generated/sample.subgraph.yaml
+npx graph-cli deploy --studio <your-subgraph-name> src/townstar.subgraph.yaml
   ```
 
 _The build and deploy instructions are based on the [Open Zeppelin docs](https://docs.openzeppelin.com/subgraphs/0.1.x/generate)._
