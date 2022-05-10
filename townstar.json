@@ -2,6 +2,7 @@
     "output": "generated/townstar.",
     "chain": "mainnet",
     "datasources": [
-      { "address": "0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c", "startBlock": 10198649, "module": [ "erc1155"] }
+      { "address": "0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c", "startBlock": 10198649, "module": [ "erc1155"] },
+      { "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA", "startBlock": 10828939, "module": [ "erc20" ]}
     ]
   }
