@@ -24,6 +24,12 @@ import {
 	fetchERC20Balance,
 } from '@openzeppelin/subgraphs/src/fetch/erc20'
 
+/**
+ * Handles transfers, mints, and burns of Gala erc 20 tokens.
+ *  * If the from address is 0x0 then it is a mint
+ *  * if the to address is 0x0 then it is a burn
+ * @param event the transfer event
+ */
 export function handleMintAndTransfer(event: TransferEvent): void { 
 	// handle create new mint
 	let contract = fetchERC20(event.address)
