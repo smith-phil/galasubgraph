@@ -13,7 +13,7 @@ Contents
 
  ### Why?
 ---
- I wanted a tool that allows people to track NFTs being minted in the gala ecosystem. 
+ I wanted a tool that allows people to track NFTs being minted in the gala ecosystem. The base subgraph code has been created using [@openzeppelin/subgraphs](https://www.npmjs.com/package/@openzeppelin/subgraphs), and has been customized to include additional entities. 
 
  ### Prerequisites
  ---
@@ -34,22 +34,12 @@ Contents
 
  ### Build and deploy
  ---
- To build the subgraph run 
-
- ```
- npx graph-compiler \
-  --config townstar.json \
-  --include node_modules/@openzeppelin/subgraphs/src/datasources \
-  --export-schema \
-  --export-subgraph
-  ```
- To deploy the subgraph to Subgraph Studio run
+ To build and deploy the subgraph to Subgraph Studio run
  ```
 npx graph-cli codegen src/townstar.subgraph.yaml
 npx graph-cli build src/townstar.subgraph.yaml
 npx graph-cli deploy --studio <your-subgraph-name> src/townstar.subgraph.yaml
   ```
 
-_The build and deploy instructions are based on the [Open Zeppelin docs](https://docs.openzeppelin.com/subgraphs/0.1.x/generate)._
 
  
