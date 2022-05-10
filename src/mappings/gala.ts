@@ -22,7 +22,7 @@ import {
 import {
 	fetchERC20,
 	fetchERC20Balance,
-} from '@openzeppelin/subgraphs/src/fetch/erc20';
+} from '@openzeppelin/subgraphs/src/fetch/erc20'
 
 export function handleMintAndTransfer(event: TransferEvent): void { 
 	// handle create new mint
@@ -46,7 +46,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		let to = fetchAccount(event.params.to)
 		mint.to = to.id
 		mint.toBalance = fetchERC20Balance(contract, to).id
-		mint.save();
+		mint.save()
 
 		// update the transfer with the to details
 		transfer.to = to.id         
