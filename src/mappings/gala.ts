@@ -41,9 +41,10 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 	transfer.value = decimals.toDecimals(event.params.value, contract.decimals)
 	transfer.valueExact = event.params.value
 
-    if(event.params.from.toHex() === constants.ADDRESS_ZERO ) {
+    if(event.params.from.toHexString() == constants.ADDRESS_ZERO ) {
         // Minty fresh tokens! Handle the mint
-		let mint = new ERC20Mint(events.id(event))
+		let mintId = contract.id.concat("-").concat(events.id(event))
+		let mint = new ERC20Mint(mintId)
 		mint.emitter = contract.id
 		mint.transaction = transfer.transaction
 		mint.timestamp = transfer.timestamp
@@ -74,7 +75,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		transfer.fromBalance = balance.id
 	}
 
-	if(event.params.to.toHex() === constants.ADDRESS_ZERO) {
+	if(event.params.to.toHexString() == constants.ADDRESS_ZERO) {
 		// Burn burn burn, that ring of fire ...
 		// TODO: ERC20Burn???
 		// handle total supply
