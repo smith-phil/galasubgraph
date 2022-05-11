@@ -55,21 +55,24 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		mint.toBalance = fetchERC20Balance(contract, to).id
 		mint.save()
 
-		// update the transfer with the to details
-		transfer.to = to.id         
-		
-		// update the balance
-		let balance = fetchERC20Balance(contract, to)
-		balance.valueExact = balance.valueExact.plus(event.params.value)
-		balance.value = decimals.toDecimals(balance.valueExact, contract.decimals)
-		balance.save()
-
 		// handle total supply
 		let totalSupply = fetchERC20Balance(contract, null)
 		totalSupply.valueExact = totalSupply.valueExact.plus(transfer.valueExact)
 		totalSupply.value = decimals.toDecimals(totalSupply.valueExact, contract.decimals)
 		totalSupply.save()
-    }	
+    } else {
+		// update the transfer with the to details
+		let from = fetchAccount(event.params.from)
+		
+		// update the balance
+		let balance = fetchERC20Balance(contract, from)
+		balance.valueExact = balance.valueExact.minus(event.params.value)
+		balance.value = decimals.toDecimals(balance.valueExact, contract.decimals)
+		balance.save()
+
+		transfer.from = from.id  
+		transfer.fromBalance = balance.id
+	}
 
 	if(event.params.to.toHex() === constants.ADDRESS_ZERO) {
 		// Burn burn burn, that ring of fire ...
@@ -79,15 +82,15 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		totalSupply.valueExact = totalSupply.valueExact.minus(transfer.valueExact)
 		totalSupply.value = decimals.toDecimals(totalSupply.valueExact, contract.decimals)
 		totalSupply.save()
-
-		let from = fetchAccount(event.params.from)
-		let balance = fetchERC20Balance(contract, from)
-		balance.valueExact = balance.valueExact.minus(event.params.value)
+	} else {
+		let to = fetchAccount(event.params.to)
+		let balance = fetchERC20Balance(contract, to)
+		balance.valueExact = balance.valueExact.plus(event.params.value)
 		balance.value = decimals.toDecimals(balance.valueExact, contract.decimals)
 		balance.save()
 
-		transfer.from = from.id
-		transfer.fromBalance = balance.id
+		transfer.to = to.id
+		transfer.to = balance.id
 	}
 	transfer.save()
 }
