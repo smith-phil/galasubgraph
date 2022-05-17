@@ -8,7 +8,8 @@ dataSources:
     source:
       address: "0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c"
       abi: IERC1155
-      startBlock: 10198649
+      startBlock: 13781351
+      # startBlock: 10198649
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -29,12 +30,13 @@ dataSources:
           handler: handleURI
       file: ../node_modules/@openzeppelin/subgraphs/src/datasources/erc1155.ts
   - kind: ethereum/contract
-    name: erc20
+    name: gala
     network: mainnet
     source:
       address: "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA"
       abi: IERC20
-      startBlock: 10828939
+      startBlock: 13781351
+      # startBlock: 10828939
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -50,3 +52,49 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleMintAndTransfer
       file: ./mappings/gala.ts
+  - kind: ethereum/contract
+    name: towncoin
+    network: mainnet
+    source:
+      address: "0x3Dd98C8A089dBCFF7e8FC8d4f532BD493501Ab7F"
+      abi: IERC20
+      startBlock: 13781351
+      # startBlock: 10828939
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC20Contract
+      abis:
+        - name: IERC20
+          file: ../node_modules/@openzeppelin/contracts/build/contracts/IERC20Metadata.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleMintAndTransfer
+      file: ./mappings/gala.ts
+  - kind: ethereum/contract
+    name: Materium
+    network: mainnet
+    source:
+      address: "0xcd17fA52528f37FACB3028688E62ec82d9417581"
+      abi: IERC20
+      startBlock: 13781351
+      # startBlock: 10828939
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC20Contract
+      abis:
+        - name: IERC20
+          file: ../node_modules/@openzeppelin/contracts/build/contracts/IERC20Metadata.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleMintAndTransfer
+      file: ./mappings/gala.ts      
