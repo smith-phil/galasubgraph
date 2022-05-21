@@ -78,6 +78,7 @@ type ERC20Contract @entity {
 	approvals: [ERC20Approval!]! @derivedFrom(field: "contract")
 	transfers: [ERC20Transfer!]! @derivedFrom(field: "contract")
 	mints: [ERC20Mint!]! @derivedFrom(field: "contract")
+	burns: [ERC20Burn!]! @derivedFrom(field: "contract")
 }
 type ERC20Balance @entity {
 	id: ID!
