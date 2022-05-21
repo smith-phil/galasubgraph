@@ -1,10 +1,10 @@
 # Example Queries 
 
-Get all token balances for a given account
+Get all token balances for an account
 
 ```
 {
-  accounts(where:{id:"<given-account-id>"}) {
+  accounts(where:{id:"<account_id>"}) {
     id
     ERC1155balances {
       token {
@@ -14,5 +14,21 @@ Get all token balances for a given account
       valueExact
     }
   }
+}
+```
+
+Get all ERC20 mints for an account
+
+```
+{
+  account(id:"<account_id>"){
+        id  
+        ERC20Mints {
+            contract{
+            symbol
+        }  
+        value
+        }
+    }
 }
 ```

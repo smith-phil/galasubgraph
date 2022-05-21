@@ -1,6 +1,6 @@
 # gala-subgraph
 
-A subgraph of gala games and gala music NFTs that have been minted so far and the accounts that hold them, for the ethereum mainnet.
+A subgraph of gala games and gala music NFTs and tokens that have been minted so far and the accounts that hold them, for the ethereum mainnet.
 
 Contents
 ========
