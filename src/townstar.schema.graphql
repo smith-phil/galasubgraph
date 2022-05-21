@@ -129,7 +129,7 @@ type ERC20Burn implements Event @entity {
 	timestamp: BigInt!
 	contract: ERC20Contract!
 	from: Account
-	fromBalance: BigDecimal
+	fromBalance: ERC20Balance
 	value: BigDecimal!
 	valueExact: BigInt!	
 }

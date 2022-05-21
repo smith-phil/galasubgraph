@@ -4,6 +4,7 @@ import {
 } from '../../generated/erc20/IERC20'
 
 import { 
+	ERC20Burn,
 	ERC20Mint, 
 	ERC20Transfer 
 } from '../../generated/schema'
@@ -55,7 +56,6 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		mint.contract = contract.id
 		mint.value = transfer.value
 		mint.valueExact = transfer.valueExact
-		let to = fetchAccount(event.params.to)
 		mint.to = to.id
 		mint.toBalance = fetchERC20Balance(contract, to).id
 		mint.save()
@@ -77,7 +77,18 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 
 	if(event.params.to.toHexString() == constants.ADDRESS_ZERO) {
 		// Burn burn burn, that ring of fire ...
-		// TODO: ERC20Burn???
+		let burnId = contract.id.concat("-").concat(events.id(event))
+		let burn = new ERC20Burn(burnId)
+		burn.emitter = contract.id
+		burn.contract = contract.id
+		burn.transaction = transfer.transaction
+		burn.timestamp = transfer.timestamp
+		burn.value = transfer.value
+		burn.valueExact = transfer.valueExact
+		burn.from = from.id
+		burn.fromBalance = fetchERC20Balance(contract, from).id
+		burn.save()
+		
 		// handle total supply
 		let totalSupply = fetchERC20Balance(contract, null)
 		totalSupply.valueExact = totalSupply.valueExact.minus(transfer.valueExact)
