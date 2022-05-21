@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.5
 schema:
   file: townstar.schema.graphql
 dataSources:
@@ -27,7 +27,7 @@ dataSources:
           handler: handleTransferSingle
         - event: URI(string,indexed uint256)
           handler: handleURI
-      file: ../node_modules/@openzeppelin/subgraphs/src/datasources/erc1155.ts
+      file: ./mappings/gala1155.ts
   - kind: ethereum/contract
     name: gala
     network: mainnet
@@ -49,7 +49,7 @@ dataSources:
           handler: handleApproval
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleMintAndTransfer
-      file: ./mappings/gala.ts
+      file: ./mappings/gala20.ts
   - kind: ethereum/contract
     name: towncoin
     network: mainnet
@@ -71,7 +71,7 @@ dataSources:
           handler: handleApproval
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleMintAndTransfer
-      file: ./mappings/gala.ts
+      file: ./mappings/gala20.ts
   - kind: ethereum/contract
     name: Materium
     network: mainnet
@@ -93,4 +93,4 @@ dataSources:
           handler: handleApproval
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleMintAndTransfer
-      file: ./mappings/gala.ts      
+      file: ./mappings/gala20.ts      
