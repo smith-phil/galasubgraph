@@ -46,7 +46,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 	let to = fetchAccount(event.params.to)
 	transfer.to = to.id 
 
-    if(event.params.from.toHexString() == constants.ADDRESS_ZERO ) {
+    if(event.params.from.toHexString() == constants.ADDRESS_ZERO.toHexString() ) {
         // Minty fresh tokens! Handle the mint
 		let mintId = contract.id.concat("-").concat(events.id(event))
 		let mint = new ERC20Mint(mintId)
@@ -75,7 +75,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		transfer.fromBalance = balance.id
 	}
 
-	if(event.params.to.toHexString() == constants.ADDRESS_ZERO) {
+	if(event.params.to.toHexString() == constants.ADDRESS_ZERO.toHexString()) {
 		// Burn burn burn, that ring of fire ...
 		let burnId = contract.id.concat("-").concat(events.id(event))
 		let burn = new ERC20Burn(burnId)
