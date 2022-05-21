@@ -40,6 +40,10 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 	transfer.timestamp = event.block.timestamp
 	transfer.value = decimals.toDecimals(event.params.value, contract.decimals)
 	transfer.valueExact = event.params.value
+	let from = fetchAccount(event.params.from)
+	transfer.from = from.id 
+	let to = fetchAccount(event.params.to)
+	transfer.to = to.id 
 
     if(event.params.from.toHexString() == constants.ADDRESS_ZERO ) {
         // Minty fresh tokens! Handle the mint
@@ -62,16 +66,12 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		totalSupply.value = decimals.toDecimals(totalSupply.valueExact, contract.decimals)
 		totalSupply.save()
     } else {
-		// update the transfer with the to details
-		let from = fetchAccount(event.params.from)
-		
 		// update the balance
 		let balance = fetchERC20Balance(contract, from)
 		balance.valueExact = balance.valueExact.minus(event.params.value)
 		balance.value = decimals.toDecimals(balance.valueExact, contract.decimals)
 		balance.save()
 
-		transfer.from = from.id  
 		transfer.fromBalance = balance.id
 	}
 
@@ -84,14 +84,13 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		totalSupply.value = decimals.toDecimals(totalSupply.valueExact, contract.decimals)
 		totalSupply.save()
 	} else {
-		let to = fetchAccount(event.params.to)
+		
 		let balance = fetchERC20Balance(contract, to)
 		balance.valueExact = balance.valueExact.plus(event.params.value)
 		balance.value = decimals.toDecimals(balance.valueExact, contract.decimals)
 		balance.save()
 
-		transfer.to = to.id
-		transfer.to = balance.id
+		transfer.toBalance = balance.id
 	}
 	transfer.save()
 }
