@@ -52,6 +52,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		let mint = new ERC20Mint(mintId)
 		mint.emitter = contract.id
 		mint.transaction = transfer.transaction
+		mint.transfer = transfer.id
 		mint.timestamp = transfer.timestamp
 		mint.contract = contract.id
 		mint.value = transfer.value
@@ -82,6 +83,7 @@ export function handleMintAndTransfer(event: TransferEvent): void {
 		burn.emitter = contract.id
 		burn.contract = contract.id
 		burn.transaction = transfer.transaction
+		burn.transfer = transfer.id 
 		burn.timestamp = transfer.timestamp
 		burn.value = transfer.value
 		burn.valueExact = transfer.valueExact

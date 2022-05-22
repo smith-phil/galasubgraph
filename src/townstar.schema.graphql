@@ -143,6 +143,7 @@ type ERC20Mint implements Event @entity {
 	id: ID!
 	emitter: Account!
 	transaction: Transaction!
+	transfer: ERC20Transfer!
 	timestamp: BigInt!
 	contract: ERC20Contract!
 	to: Account
@@ -155,6 +156,7 @@ type ERC20Burn implements Event @entity {
 	id: ID!
 	emitter: Account!
 	transaction: Transaction!
+	transfer: ERC20Transfer!
 	timestamp: BigInt!
 	contract: ERC20Contract!
 	from: Account
