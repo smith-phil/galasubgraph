@@ -1,6 +1,6 @@
 {
   "name": "gala-subgraph",
-  "version": "0.0.8",
+  "version": "0.0.19",
   "description": "Gala games NFT minting subgraph",
   "main": "index.js",
   "scripts": {
