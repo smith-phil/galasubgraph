@@ -43,6 +43,18 @@ import {
     replaceURI,
 } from '../utils/erc1155'
 
+/**
+ * if both from and to are address zero do not register a mint or a burn. These transactions have zero value anyway. 
+ * @param event 
+ * @param suffix 
+ * @param contract 
+ * @param operator 
+ * @param from 
+ * @param to 
+ * @param id 
+ * @param value 
+ * 
+ */
 function registerTransfer(
 	event:    ethereum.Event,
 	suffix:   string,
@@ -67,21 +79,24 @@ function registerTransfer(
 	ev.from 		= from.id 
 	ev.to			= to.id 
 
-	if (from.id == constants.ADDRESS_ZERO.toHexString()) {
-        // Fresh minty mint!
-		let mintId 				= ev.transaction.concat('/').concat(events.id(event))
-		let mint 				= new ERC1155Mint(mintId)
-		mint.emitter			= contract.id 
-		mint.transaction		= transactions.log(event).id
-		mint.timestamp			= event.block.timestamp
-		mint.contract			= contract.id 
-		mint.token				= token.id 
-		mint.operator			= operator.id 
-		mint.to					= to.id 
-		mint.toBalance			= fetchERC1155Balance(token, to).id
-		mint.valueExact			= value 
-		mint.value				= decimals.toDecimals(value)
-		mint.save()
+	if (from.id == constants.ADDRESS_ZERO.toHexString() ) {
+        
+		if(to.id != constants.ADDRESS_ZERO.toHexString()) {
+			// Fresh minty mint!
+			let mintId 				= ev.transaction.concat('/').concat(events.id(event))
+			let mint 				= new ERC1155Mint(mintId)
+			mint.emitter			= contract.id 
+			mint.transaction		= transactions.log(event).id
+			mint.timestamp			= event.block.timestamp
+			mint.contract			= contract.id 
+			mint.token				= token.id 
+			mint.operator			= operator.id 
+			mint.to					= to.id 
+			mint.toBalance			= fetchERC1155Balance(token, to).id
+			mint.valueExact			= value 
+			mint.value				= decimals.toDecimals(value)
+			mint.save()
+		}
 
 		let totalSupply        	= fetchERC1155Balance(token, null)
 		totalSupply.valueExact 	= totalSupply.valueExact.plus(value)
@@ -97,20 +112,22 @@ function registerTransfer(
 	}
 
 	if (to.id == constants.ADDRESS_ZERO.toHexString()) {
-        // Burn baby, burn!
-		let burnId 				= ev.transaction.concat('/').concat(events.id(event))
-		let burn 				= new ERC1155Burn(burnId)
-		burn.emitter			= contract.id 
-		burn.transaction		= transactions.log(event).id
-		burn.timestamp			= event.block.timestamp
-		burn.contract			= contract.id 
-		burn.token				= token.id 
-		burn.operator			= operator.id 
-		burn.from				= from.id 
-		burn.fromBalance		= fetchERC1155Balance(token, from).id
-		burn.valueExact			= value 
-		burn.value				= decimals.toDecimals(value)
-		burn.save()
+		if(from.id != constants.ADDRESS_ZERO.toHexString()){
+			// Burn baby, burn!
+			let burnId 				= ev.transaction.concat('/').concat(events.id(event))
+			let burn 				= new ERC1155Burn(burnId)
+			burn.emitter			= contract.id 
+			burn.transaction		= transactions.log(event).id
+			burn.timestamp			= event.block.timestamp
+			burn.contract			= contract.id 
+			burn.token				= token.id 
+			burn.operator			= operator.id 
+			burn.from				= from.id 
+			burn.fromBalance		= fetchERC1155Balance(token, from).id
+			burn.valueExact			= value 
+			burn.value				= decimals.toDecimals(value)
+			burn.save()
+		}
 
 		let totalSupply        = fetchERC1155Balance(token, null)
 		totalSupply.valueExact = totalSupply.valueExact.minus(value)
