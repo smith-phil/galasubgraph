@@ -87,6 +87,7 @@ function registerTransfer(
 			let mint 				= new ERC1155Mint(mintId)
 			mint.emitter			= contract.id 
 			mint.transaction		= transactions.log(event).id
+			mint.transfer			= ev.id
 			mint.timestamp			= event.block.timestamp
 			mint.contract			= contract.id 
 			mint.token				= token.id 
@@ -118,6 +119,7 @@ function registerTransfer(
 			let burn 				= new ERC1155Burn(burnId)
 			burn.emitter			= contract.id 
 			burn.transaction		= transactions.log(event).id
+			burn.transfer 			= ev.id
 			burn.timestamp			= event.block.timestamp
 			burn.contract			= contract.id 
 			burn.token				= token.id 

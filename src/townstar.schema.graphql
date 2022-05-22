@@ -69,6 +69,7 @@ type ERC1155Mint implements Event @entity {
 	id: ID!
 	emitter: Account!
 	transaction: Transaction!
+	transfer: ERC1155Transfer!
 	timestamp: BigInt!
 	contract: ERC1155Contract!
 	token: ERC1155Token!
@@ -83,6 +84,7 @@ type ERC1155Burn implements Event @entity {
 	id: ID!
 	emitter: Account!
 	transaction: Transaction!
+	transfer: ERC1155Transfer!
 	timestamp: BigInt!
 	contract: ERC1155Contract!
 	token: ERC1155Token!
