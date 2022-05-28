@@ -13,7 +13,7 @@ Contents
 
  ### Why?
 ---
- I wanted a tool that allows people to track NFTs being minted in the gala ecosystem. The base subgraph code has been created using [@openzeppelin/subgraphs](https://www.npmjs.com/package/@openzeppelin/subgraphs), and has been customized to include additional entities. 
+ I wanted a tool that allows people to track NFTs and game assets in the gala ecosystem. The base subgraph code has been created using [@openzeppelin/subgraphs](https://www.npmjs.com/package/@openzeppelin/subgraphs), and has been customized to include additional entities. 
 
  ### Prerequisites
  ---
@@ -25,11 +25,7 @@ Contents
 
  ### Installation
  ---
- To install this clone the repo, and run `npm install` at the root of the repo folder. This will install:
-
- * [@openzeppelin/subgraphs](https://www.npmjs.com/package/@openzeppelin/subgraphs)
- * [@graphprotocol/graph-cli](https://www.npmjs.com/package/@graphprotocol/graph-cli)
- * [@graphprotocol/graph-ts](https://www.npmjs.com/package/@graphprotocol/graph-ts)
+ To install this clone the repo, and run `npm install` at the root of the repo folder. This will install
 
 
  ### Build and deploy
