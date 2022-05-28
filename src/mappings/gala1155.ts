@@ -10,7 +10,9 @@ import {
 
 import {
 	Account,
+	ERC1155Burn,
 	ERC1155Contract,
+	ERC1155Mint,
 	ERC1155Transfer,
 } from '../../generated/schema'
 
@@ -41,6 +43,18 @@ import {
     replaceURI,
 } from '../utils/erc1155'
 
+/**
+ * if both from and to are address zero do not register a mint or a burn. These transactions have zero value anyway. 
+ * @param event 
+ * @param suffix 
+ * @param contract 
+ * @param operator 
+ * @param from 
+ * @param to 
+ * @param id 
+ * @param value 
+ * 
+ */
 function registerTransfer(
 	event:    ethereum.Event,
 	suffix:   string,
@@ -52,23 +66,42 @@ function registerTransfer(
 	value:    BigInt)
 : void
 {
-	let token      = fetchERC1155Token(contract, id)
-	let ev         = new ERC1155Transfer(events.id(event).concat(suffix))
-	ev.emitter     = token.id
-	ev.transaction = transactions.log(event).id
-	ev.timestamp   = event.block.timestamp
-	ev.contract    = contract.id
-	ev.token       = token.id
-	ev.operator    = operator.id
-	ev.value       = decimals.toDecimals(value)
-	ev.valueExact  = value
+	let token      	= fetchERC1155Token(contract, id)
+	let ev         	= new ERC1155Transfer(events.id(event).concat(suffix))
+	ev.emitter     	= contract.id
+	ev.transaction 	= transactions.log(event).id
+	ev.timestamp   	= event.block.timestamp
+	ev.contract    	= contract.id
+	ev.token       	= token.id
+	ev.operator    	= operator.id
+	ev.value       	= decimals.toDecimals(value)
+	ev.valueExact  	= value
+	ev.from 		= from.id 
+	ev.to			= to.id 
 
-	if (from.id == constants.ADDRESS_ZERO.toHexString()) {
-        // Fresh minty mint!
+	if (from.id == constants.ADDRESS_ZERO.toHexString() ) {
+        
+		if(to.id != constants.ADDRESS_ZERO.toHexString()) {
+			// Fresh minty mint!
+			let mintId 				= ev.transaction.concat('/').concat(events.id(event))
+			let mint 				= new ERC1155Mint(mintId)
+			mint.emitter			= contract.id 
+			mint.transaction		= transactions.log(event).id
+			mint.transfer			= ev.id
+			mint.timestamp			= event.block.timestamp
+			mint.contract			= contract.id 
+			mint.token				= token.id 
+			mint.operator			= operator.id 
+			mint.to					= to.id 
+			mint.toBalance			= fetchERC1155Balance(token, to).id
+			mint.valueExact			= value 
+			mint.value				= decimals.toDecimals(value)
+			mint.save()
+		}
 
-		let totalSupply        = fetchERC1155Balance(token, null)
-		totalSupply.valueExact = totalSupply.valueExact.plus(value)
-		totalSupply.value      = decimals.toDecimals(totalSupply.valueExact)
+		let totalSupply        	= fetchERC1155Balance(token, null)
+		totalSupply.valueExact 	= totalSupply.valueExact.plus(value)
+		totalSupply.value      	= decimals.toDecimals(totalSupply.valueExact)
 		totalSupply.save()
 	} else {
 		let balance            = fetchERC1155Balance(token, from)
@@ -76,12 +109,28 @@ function registerTransfer(
 		balance.value          = decimals.toDecimals(balance.valueExact)
 		balance.save()
 
-		ev.from                = from.id
 		ev.fromBalance         = balance.id
 	}
 
 	if (to.id == constants.ADDRESS_ZERO.toHexString()) {
-        // Burn baby, burn!
+		if(from.id != constants.ADDRESS_ZERO.toHexString()){
+			// Burn baby, burn!
+			let burnId 				= ev.transaction.concat('/').concat(events.id(event))
+			let burn 				= new ERC1155Burn(burnId)
+			burn.emitter			= contract.id 
+			burn.transaction		= transactions.log(event).id
+			burn.transfer 			= ev.id
+			burn.timestamp			= event.block.timestamp
+			burn.contract			= contract.id 
+			burn.token				= token.id 
+			burn.operator			= operator.id 
+			burn.from				= from.id 
+			burn.fromBalance		= fetchERC1155Balance(token, from).id
+			burn.valueExact			= value 
+			burn.value				= decimals.toDecimals(value)
+			burn.save()
+		}
+
 		let totalSupply        = fetchERC1155Balance(token, null)
 		totalSupply.valueExact = totalSupply.valueExact.minus(value)
 		totalSupply.value      = decimals.toDecimals(totalSupply.valueExact)
@@ -92,7 +141,6 @@ function registerTransfer(
 		balance.value          = decimals.toDecimals(balance.valueExact)
 		balance.save()
 
-		ev.to                  = to.id
 		ev.toBalance           = balance.id
 	}
 

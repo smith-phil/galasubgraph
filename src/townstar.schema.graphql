@@ -65,7 +65,35 @@ type ERC1155Transfer implements Event @entity {
 	value: BigDecimal!
 	valueExact: BigInt!
 }
+type ERC1155Mint implements Event @entity {
+	id: ID!
+	emitter: Account!
+	transaction: Transaction!
+	transfer: ERC1155Transfer!
+	timestamp: BigInt!
+	contract: ERC1155Contract!
+	token: ERC1155Token!
+	operator: Account!
+	to: Account
+	toBalance: ERC1155Balance
+	value: BigDecimal!
+	valueExact: BigInt!	
+}
 
+type ERC1155Burn implements Event @entity {
+	id: ID!
+	emitter: Account!
+	transaction: Transaction!
+	transfer: ERC1155Transfer!
+	timestamp: BigInt!
+	contract: ERC1155Contract!
+	token: ERC1155Token!
+	operator: Account!
+	from: Account
+	fromBalance: ERC1155Balance
+	value: BigDecimal!
+	valueExact: BigInt!	
+}
 
 type ERC20Contract @entity {
 	id: ID!
@@ -115,6 +143,7 @@ type ERC20Mint implements Event @entity {
 	id: ID!
 	emitter: Account!
 	transaction: Transaction!
+	transfer: ERC20Transfer!
 	timestamp: BigInt!
 	contract: ERC20Contract!
 	to: Account
@@ -127,6 +156,7 @@ type ERC20Burn implements Event @entity {
 	id: ID!
 	emitter: Account!
 	transaction: Transaction!
+	transfer: ERC20Transfer!
 	timestamp: BigInt!
 	contract: ERC20Contract!
 	from: Account
