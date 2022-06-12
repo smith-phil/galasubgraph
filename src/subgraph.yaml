@@ -1,4 +1,4 @@
-specVersion: 0.0.5
+specVersion: 0.0.4
 schema:
   file: townstar.schema.graphql
 dataSources:
@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xc36cF0cFcb5d905B8B513860dB0CFE63F6Cf9F5c"
       abi: IERC1155
-      startBlock: 10198649
+      startBlock: 10198648
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
