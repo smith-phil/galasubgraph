@@ -93,4 +93,5 @@ dataSources:
           handler: handleApproval
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleMintAndTransfer
-      file: ./mappings/gala20.ts      
+      file: ./mappings/gala20.ts  
+      
