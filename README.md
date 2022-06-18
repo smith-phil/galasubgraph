@@ -32,7 +32,7 @@ Contents
  ---
  To build and deploy the subgraph to Subgraph Studio run
  ```
-npx graph-cli codegen src/townstar.subgraph.yaml
+npx graph-cli codegen src/subgraph.yaml
 npx graph-cli build src/townstar.subgraph.yaml
 npx graph-cli deploy --studio <your-subgraph-name> src/townstar.subgraph.yaml
   ```
